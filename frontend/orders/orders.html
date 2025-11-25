@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/orders.css" />
+    <link rel="shortcut icon" href="../icon.png" type="image/x-icon" />
+    <script defer src="./scripts/orders.js"></script>
+    <title>Food Ordering | Orders History Page</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-container">
+        <a href="/frontend/index.html" class="logo-section">
+          <img
+            src="/frontend/icon.png"
+            alt="FoodDash Logo"
+            onerror="this.src='https://via.placeholder.com/50?text=FD'"
+          />
+          <h1>FoodDash</h1>
+        </a>
+
+        <button
+          class="mobile-menu-toggle"
+          onclick="toggleMobileMenu()"
+          aria-label="Toggle menu"
+        >
+          <i class="fas fa-bars" id="menuIcon"></i>
+        </button>
+
+        <nav class="nav-menu" id="navMenu">
+          <a data-path="home" href="/frontend/index.html">home</a>
+          <a data-path="login" href="../login/login.html">login</a>
+          <a data-path="register" href="../register/register.html">register</a>
+          <a data-path="menu" href="../menu/menu.html" class="active">menu</a>
+          <a data-path="cart" href="../cart/cart.html">cart</a>
+          <a data-path="orders" href="../orders/orders.html">my orders</a>
+          <a data-path="dashboard" href="../dashboard/menu.html">dashboard</a>
+          <button class="logout-button" onclick="handleLogout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <h1>Orders Page</h1>
+      <h1>Welcome to Our Food Ordering Service</h1>
+
+      <div>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae
+          facilis minus aut quae vitae veritatis illo iure qui? Quae eaque
+          error, iste rem asperiores soluta ipsam ea dicta blanditiis sequi?
+        </p>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae
+          facilis minus aut quae vitae veritatis illo iure qui? Quae eaque
+          error, iste rem asperiores soluta ipsam ea dicta blanditiis sequi?
+        </p>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae
+          facilis minus aut quae vitae veritatis illo iure qui? Quae eaque
+          error, iste rem asperiores soluta ipsam ea dicta blanditiis sequi?
+        </p>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae
+          facilis minus aut quae vitae veritatis illo iure qui? Quae eaque
+          error, iste rem asperiores soluta ipsam ea dicta blanditiis sequi?
+        </p>
+      </div>
+    </main>
+  </body>
+</html>

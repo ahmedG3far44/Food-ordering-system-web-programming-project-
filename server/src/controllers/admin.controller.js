@@ -1,4 +1,4 @@
-import { promisePool } from "../config/database.js";
+import myDB from "../config/database.js";
 
 export const getDashboardStats = async (req, res, next) => {
   try {
@@ -14,7 +14,7 @@ export const getDashboardStats = async (req, res, next) => {
     }
 
     // Total orders and revenue
-    const [orderStats] = await promisePool.query(
+    const [orderStats] = await myDB.query(
       `SELECT 
         COUNT(*) as total_orders,
         SUM(final_amount) as total_revenue,
@@ -24,7 +24,7 @@ export const getDashboardStats = async (req, res, next) => {
     );
 
     // Orders by status
-    const [statusBreakdown] = await promisePool.query(
+    const [statusBreakdown] = await myDB.query(
       `SELECT 
         status,
         COUNT(*) as count
@@ -34,7 +34,7 @@ export const getDashboardStats = async (req, res, next) => {
     );
 
     // Top selling items
-    const [topItems] = await promisePool.query(
+    const [topItems] = await myDB.query(
       `SELECT 
         mi.id, mi.name, mi.image_url,
         SUM(oi.quantity) as total_sold,
@@ -49,7 +49,7 @@ export const getDashboardStats = async (req, res, next) => {
     );
 
     // Recent reviews
-    const [recentReviews] = await promisePool.query(
+    const [recentReviews] = await myDB.query(
       `SELECT 
         r.id, r.rating, r.comment, r.created_at,
         u.full_name as user_name,
@@ -108,7 +108,7 @@ export const getAllOrders = async (req, res, next) => {
     query += ` ORDER BY o.created_at DESC LIMIT ? OFFSET ?`;
     params.push(parseInt(limit), parseInt(offset));
 
-    const [orders] = await promisePool.query(query, params);
+    const [orders] = await myDB.query(query, params);
 
     res.json({
       success: true,
@@ -120,7 +120,7 @@ export const getAllOrders = async (req, res, next) => {
 };
 
 export const updateOrderStatus = async (req, res, next) => {
-  const connection = await promisePool.getConnection();
+  const connection = await myDB.getConnection();
 
   try {
     await connection.beginTransaction();
@@ -234,7 +234,7 @@ export const getSalesReport = async (req, res, next) => {
 
     query += " GROUP BY period ORDER BY period DESC";
 
-    const [report] = await promisePool.query(query, params);
+    const [report] = await myDB.query(query, params);
 
     // Calculate totals
     const totals = report.reduce(
@@ -300,7 +300,7 @@ export const getItemPerformance = async (req, res, next) => {
     `;
     params.push(parseInt(limit));
 
-    const [items] = await promisePool.query(query, params);
+    const [items] = await myDB.query(query, params);
 
     res.json({
       success: true,
@@ -316,7 +316,7 @@ export const getCustomerInsights = async (req, res, next) => {
     const { limit = 20 } = req.query;
 
     // Top customers by order value
-    const [topCustomers] = await promisePool.query(
+    const [topCustomers] = await myDB.query(
       `SELECT 
         u.id, u.full_name, u.email, u.phone,
         COUNT(o.id) as total_orders,
@@ -333,7 +333,7 @@ export const getCustomerInsights = async (req, res, next) => {
     );
 
     // New customers this month
-    const [newCustomers] = await promisePool.query(
+    const [newCustomers] = await myDB.query(
       `SELECT COUNT(*) as count
        FROM users
        WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)

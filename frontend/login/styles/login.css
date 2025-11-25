@@ -1,5 +1,3 @@
-
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -44,4 +42,169 @@ body {
 }
 .header nav a:hover {
   color: orange;
+}
+
+/* انسخ نفس كود signup.css بالكامل وضف عليه الجزء ده تحت خالص */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+.container {
+  display: flex;
+  width: 90%;
+  max-width: 1100px;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin: 20px;
+  min-height: 600px;
+}
+.image-section {
+  flex: 1;
+  position: relative;
+  background-color: #222;
+}
+.image-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.form-section {
+  flex: 1;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+  color: #000;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.brand i {
+  color: #e87c1e;
+  font-size: 1.5rem;
+  margin-right: 8px;
+}
+.header-text {
+  text-align: center;
+  margin-bottom: 35px;
+}
+.header-text h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+.header-text p {
+  color: #666;
+  font-size: 0.95rem;
+}
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 0.9rem;
+}
+.input-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.input-group input:focus {
+  border-color: #e87c1e;
+}
+.password-wrapper {
+  position: relative;
+}
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #777;
+}
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #e87c1e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.submit-btn:hover {
+  background-color: #d66e15;
+}
+.footer-text {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 0.9rem;
+  color: #666;
+}
+.link {
+  color: #e87c1e;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* إضافات خاصة بصفحة الدخول */
+.actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.185);
+  border-radius: 16px;
+  border: 1px solid #d3d0d0c9;
+}
+button.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    width: 95%;
+  }
+  .image-section {
+    height: 200px;
+  }
+  .form-section {
+    padding: 30px 20px;
+  }
 }

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./icon.png" type="image/x-icon" />
+
+    <title>Food Ordering | Home Page</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      body {
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+        max-width: 75%;
+        margin: auto;
+        padding: 20px;
+      }
+      @media (max-width: 768px) {
+        body {
+          max-width: 95%;
+          padding: 10px;
+        }
+      }
+
+      .header {
+        background-color: #fff;
+        padding: 10px 0;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 0px;
+      }
+
+      .header nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+      }
+      .header nav a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .header nav a:hover {
+        color: orange;
+      }
+      .logout-button {
+        margin-top: auto;
+        background-color: #bd4c0b;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: opacity 0.6s;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div style="display: flex; align-items: center; gap: 0.5rem">
+        <img
+          src="/frontend/icon.png"
+          width="50"
+          height="50"
+          alt="food ordering app logo"
+        />
+        <h1 style="font-weight: black; font-size: 2rem">FoodDash</h1>
+      </div>
+      <nav>
+        <a data-path="home" href="/frontend/index.html">home</a>
+        <a data-path="login" href="./login/login.html">login</a>
+        <a data-path="register" href="./register/register.html">register</a>
+        <a data-path="menu" href="./menu/menu.html">menu</a>
+        <a data-path="cart" href="./cart/cart.html">cart</a>
+        <a data-path="orders" href="./orders/orders.html">my orders</a>
+        <a data-path="dashboard" href="./dashboard/menu.html">dashboard</a>
+        <button class="logout-button">Logout</button>
+      </nav>
+    </header>
+    <main class="main-content">
+      <h1>Welcome to Our Food Ordering Service</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, modi
+        dolore ab inventore placeat natus tempora non maxime quae illo at
+        necessitatibus obcaecati sapiente est eveniet nemo aperiam minus
+        provident?
+      </p>
+      <!--       
+      complete landing page code
+       -->
+    </main>
+    <script>
+      const navElements = document.querySelectorAll("nav a");
+      const currentUser = JSON.parse(localStorage.getItem("user")) || null;
+      const isLogged = localStorage.getItem("isLogged") === "true";
+
+      if (!currentUser) {
+        document.querySelector(".logout-button").style.display = "none";
+      } else {
+        document.querySelector(".logout-button").style.display = "inline-block";
+      }
+
+      navElements.forEach((navEl) => {
+        const role = currentUser ? currentUser.role : null;
+        switch (role) {
+          case "ADMIN":
+            if (
+              navEl.getAttribute("data-path").includes("login") ||
+              navEl.getAttribute("data-path").includes("register") ||
+              navEl.getAttribute("data-path").includes("checkout") ||
+              navEl.getAttribute("data-path").includes("cart") ||
+              navEl.getAttribute("data-path").includes("orders")
+            ) {
+              navEl.style.display = "none";
+            } else {
+              navEl.style.display = "inline-block";
+            }
+            break;
+          case "USER":
+            if (
+              navEl.getAttribute("data-path").includes("dashboard") ||
+              navEl.getAttribute("data-path").includes("login") ||
+              navEl.getAttribute("data-path").includes("register")
+            ) {
+              navEl.style.display = "none";
+            } else {
+              navEl.style.display = "inline-block";
+            }
+            break;
+          default:
+            // No user logged in
+            if (!isLogged) {
+              if (
+                navEl.getAttribute("data-path").includes("checkout") ||
+                navEl.getAttribute("data-path").includes("cart") ||
+                navEl.getAttribute("data-path").includes("dashboard") ||
+                navEl.getAttribute("data-path").includes("orders")
+              ) {
+                navEl.style.display = "none";
+              } else {
+                navEl.style.display = "inline-block";
+              }
+            }
+        }
+      });
+
+      const logoutBtn = document.querySelector(".logout-button");
+
+      function handleLogout() {
+        localStorage.removeItem("user");
+        localStorage.setItem("isLogged", "false");
+        window.location.href = `/frontend/login/login.html`;
+        logoutBtn.style.display = "none";
+      }
+
+      logoutBtn.addEventListener("click", handleLogout);
+    </script>
+  </body>
+</html>

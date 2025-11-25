@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FoodDash - Admin Dashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./styles/dashborad.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="admin-nav">
+      <div class="nav-left">
+        <div class="brand"><i class="fas fa-hamburger"></i> FoodDash Admin</div>
+      </div>
+      <div class="nav-right">
+        <div class="admin-info">
+          <span class="admin-name">Admin Manager</span>
+          <img
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=60"
+            alt="Admin"
+            class="admin-avatar"
+          />
+        </div>
+        <button class="logout-btn" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <ul class="sidebar-menu">
+        <li class="menu-item active" onclick="showSection('dashboard')">
+          <i class="fas fa-chart-line"></i> Dashboard
+        </li>
+        <li class="menu-item" onclick="showSection('orders')">
+          <i class="fas fa-shopping-bag"></i> Orders
+        </li>
+        <li class="menu-item" onclick="showSection('items')">
+          <i class="fas fa-utensils"></i> Menu Items
+        </li>
+        <li class="menu-item" onclick="showSection('customers')">
+          <i class="fas fa-users"></i> Customers
+        </li>
+        <li class="menu-item" onclick="showSection('analytics')">
+          <i class="fas fa-chart-pie"></i> Analytics
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+      <!-- Dashboard Section -->
+      <div id="dashboard" class="section active">
+        <div class="section-header">
+          <h1>Dashboard</h1>
+          <p>Welcome back! Here's your restaurant overview.</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" style="background-color: #e87c1e">
+              <i class="fas fa-shopping-bag"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Total Orders</h3>
+              <p class="stat-value">1,245</p>
+              <span class="stat-change">+12% from last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon" style="background-color: #27ae60">
+              <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Revenue</h3>
+              <p class="stat-value">$12,450</p>
+              <span class="stat-change">+8% from last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon" style="background-color: #3498db">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Total Customers</h3>
+              <p class="stat-value">856</p>
+              <span class="stat-change">+25 new this week</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon" style="background-color: #e74c3c">
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Rating</h3>
+              <p class="stat-value">4.8/5</p>
+              <span class="stat-change">Based on 342 reviews</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="recent-section">
+          <h2>Recent Orders</h2>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#ORD-001</td>
+                <td>John Doe</td>
+                <td>Burger, Pizza</td>
+                <td>$38.99</td>
+                <td>
+                  <span class="status-badge status-completed">Completed</span>
+                </td>
+                <td>
+                  <button
+                    class="btn-action"
+                    onclick="alert('Order Details: #ORD-001')"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>#ORD-002</td>
+                <td>Sarah Smith</td>
+                <td>Pasta, Salad</td>
+                <td>$25.49</td>
+                <td>
+                  <span class="status-badge status-pending">Pending</span>
+                </td>
+                <td>
+                  <button
+                    class="btn-action"
+                    onclick="alert('Order Details: #ORD-002')"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>#ORD-003</td>
+                <td>Mike Johnson</td>
+                <td>Sandwich</td>
+                <td>$14.99</td>
+                <td>
+                  <span class="status-badge status-processing">Processing</span>
+                </td>
+                <td>
+                  <button
+                    class="btn-action"
+                    onclick="alert('Order Details: #ORD-003')"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Orders Section -->
+      <div id="orders" class="section">
+        <div class="section-header">
+          <h1>Manage Orders</h1>
+          <p>View and manage all customer orders.</p>
+        </div>
+
+        <div class="filter-bar">
+          <input
+            type="text"
+            placeholder="Search orders..."
+            class="search-input"
+          />
+          <select class="filter-select">
+            <option>All Status</option>
+            <option>Pending</option>
+            <option>Processing</option>
+            <option>Completed</option>
+            <option>Cancelled</option>
+          </select>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#ORD-001</td>
+              <td>John Doe</td>
+              <td>Burger, Pizza</td>
+              <td>$38.99</td>
+              <td>2025-11-24</td>
+              <td>
+                <span class="status-badge status-completed">Completed</span>
+              </td>
+              <td>
+                <button class="btn-edit" onclick="editOrder(this)">Edit</button>
+                <button class="btn-delete" onclick="deleteOrder(this)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>#ORD-002</td>
+              <td>Sarah Smith</td>
+              <td>Pasta, Salad</td>
+              <td>$25.49</td>
+              <td>2025-11-24</td>
+              <td><span class="status-badge status-pending">Pending</span></td>
+              <td>
+                <button class="btn-edit" onclick="editOrder(this)">Edit</button>
+                <button class="btn-delete" onclick="deleteOrder(this)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Menu Items Section -->
+      <div id="items" class="section">
+        <div class="section-header">
+          <h1>Menu Items</h1>
+          <button class="btn-add-item" onclick="addNewItem()">
+            <i class="fas fa-plus"></i> Add New Item
+          </button>
+        </div>
+
+        <div class="items-grid">
+          <div class="item-card">
+            <div class="item-image">
+              <img
+                src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=60"
+                alt="Burger"
+              />
+            </div>
+            <div class="item-info">
+              <h3>Classic Burger</h3>
+              <p class="item-price">$12.99</p>
+              <p class="item-status">In Stock</p>
+              <div class="item-actions">
+                <button class="btn-small btn-edit" onclick="editMenuItem(this)">
+                  Edit
+                </button>
+                <button
+                  class="btn-small btn-delete"
+                  onclick="deleteMenuItem(this)"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-card">
+            <div class="item-image">
+              <img
+                src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=60"
+                alt="Pizza"
+              />
+            </div>
+            <div class="item-info">
+              <h3>Pepperoni Pizza</h3>
+              <p class="item-price">$18.99</p>
+              <p class="item-status">In Stock</p>
+              <div class="item-actions">
+                <button class="btn-small btn-edit" onclick="editMenuItem(this)">
+                  Edit
+                </button>
+                <button
+                  class="btn-small btn-delete"
+                  onclick="deleteMenuItem(this)"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-card">
+            <div class="item-image">
+              <img
+                src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=60"
+                alt="Pasta"
+              />
+            </div>
+            <div class="item-info">
+              <h3>Pasta Carbonara</h3>
+              <p class="item-price">$14.99</p>
+              <p class="item-status">In Stock</p>
+              <div class="item-actions">
+                <button class="btn-small btn-edit" onclick="editMenuItem(this)">
+                  Edit
+                </button>
+                <button
+                  class="btn-small btn-delete"
+                  onclick="deleteMenuItem(this)"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customers Section -->
+      <div id="customers" class="section">
+        <div class="section-header">
+          <h1>Customers</h1>
+          <p>Manage your customer base.</p>
+        </div>
+
+        <div class="filter-bar">
+          <input
+            type="text"
+            placeholder="Search customers..."
+            class="search-input"
+          />
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Customer ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Orders</th>
+              <th>Total Spent</th>
+              <th>Joined</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#CUST-001</td>
+              <td>John Doe</td>
+              <td>john@example.com</td>
+              <td>12</td>
+              <td>$187.50</td>
+              <td>2025-01-15</td>
+            </tr>
+            <tr>
+              <td>#CUST-002</td>
+              <td>Sarah Smith</td>
+              <td>sarah@example.com</td>
+              <td>8</td>
+              <td>$125.30</td>
+              <td>2025-02-20</td>
+            </tr>
+            <tr>
+              <td>#CUST-003</td>
+              <td>Mike Johnson</td>
+              <td>mike@example.com</td>
+              <td>15</td>
+              <td>$256.80</td>
+              <td>2024-12-10</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Analytics Section -->
+      <div id="analytics" class="section">
+        <div class="section-header">
+          <h1>Analytics</h1>
+          <p>Sales and performance metrics.</p>
+        </div>
+
+        <div class="analytics-grid">
+          <div class="chart-card">
+            <h3>Sales This Month</h3>
+            <div class="chart-placeholder">
+              <i class="fas fa-chart-line"></i>
+              <p>Chart visualization would go here</p>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <h3>Popular Items</h3>
+            <div class="chart-placeholder">
+              <i class="fas fa-chart-bar"></i>
+              <p>Chart visualization would go here</p>
+            </div>
+          </div>
+
+          <div class="chart-card" style="grid-column: 1 / -1">
+            <h3>Daily Revenue</h3>
+            <div class="chart-placeholder">
+              <i class="fas fa-chart-area"></i>
+              <p>Chart visualization would go here</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../dashboard/scripts/dashboard.js"></script>
+  </body>
+</html>

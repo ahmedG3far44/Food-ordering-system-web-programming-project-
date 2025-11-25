@@ -3,26 +3,168 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../icon.png" type="image/x-icon" />
     <link rel="stylesheet" href="./styles/cart.css" />
     <script defer src="./scripts/cart.js"></script>
     <title>Food Ordering | Cart Page</title>
   </head>
-  <body>
+  <body class="container">
     <header class="header">
-      <h1>Ordering Food APP</h1>
-      <nav>
-        <a href="../home.html">home</a>
-        <a href="../login/login.html">login</a>
-        <a href="../register/register.html">register</a>
-        <a href="../checkout/checkout.html">checkout</a>
-        <a href="../cart/cart.html">cart</a>
-        <a href="../dashboard/menu.html">dashboard</a>
-      </nav>
+      <div class="header-container">
+        <a href="/frontend/index.html" class="logo-section">
+          <img
+            src="/frontend/icon.png"
+            alt="FoodDash Logo"
+            onerror="this.src='https://via.placeholder.com/50?text=FD'"
+          />
+          <h1>FoodDash</h1>
+        </a>
+
+        <button
+          class="mobile-menu-toggle"
+          onclick="toggleMobileMenu()"
+          aria-label="Toggle menu"
+        >
+          <i class="fas fa-bars" id="menuIcon"></i>
+        </button>
+
+        <nav class="nav-menu" id="navMenu">
+          <a data-path="home" href="/frontend/index.html">home</a>
+          <a data-path="login" href="../login/login.html">login</a>
+          <a data-path="register" href="../register/register.html">register</a>
+          <a data-path="menu" href="../menu/menu.html" class="active">menu</a>
+          <a data-path="cart" href="../cart/cart.html">cart</a>
+          <a data-path="orders" href="../orders/orders.html">my orders</a>
+          <a data-path="dashboard" href="../dashboard/menu.html">dashboard</a>
+          <button class="logout-button" onclick="handleLogout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </nav>
+      </div>
     </header>
-    <main>
-      <h1>Cart Page</h1>
-      <h1>Welcome to Our Food Ordering Service</h1>
-      <!-- Cart items and details go here -->
+    <main class="cart-container">
+      <div class="cart-wrapper">
+        <!-- Cart Items Section -->
+        <div class="cart-items">
+          <div class="header-text">
+            <h1>Your Cart</h1>
+            <p>Review and manage your items before checkout.</p>
+          </div>
+
+          <div id="cart-items-list" class="items-list">
+            <!-- Sample Cart Items -->
+            <div class="cart-item">
+              <div class="item-image">
+                <img
+                  src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
+                  alt="Burger"
+                />
+              </div>
+              <div class="item-details">
+                <h3>Classic Cheeseburger</h3>
+                <p class="item-description">
+                  With lettuce, tomato, and special sauce
+                </p>
+                <p class="item-price">$12.99</p>
+              </div>
+              <div class="item-controls">
+                <button class="btn-quantity" onclick="decreaseQuantity(this)">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <input type="number" class="quantity-input" value="1" min="1" />
+                <button class="btn-quantity" onclick="increaseQuantity(this)">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <div class="item-total">
+                <p class="total-price">$12.99</p>
+              </div>
+              <button class="btn-remove" onclick="removeItem(this)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+
+            <div class="cart-item">
+              <div class="item-image">
+                <img
+                  src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
+                  alt="Pizza"
+                />
+              </div>
+              <div class="item-details">
+                <h3>Pepperoni Pizza</h3>
+                <p class="item-description">Large, 8 slices with mozzarella</p>
+                <p class="item-price">$18.99</p>
+              </div>
+              <div class="item-controls">
+                <button class="btn-quantity" onclick="decreaseQuantity(this)">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <input type="number" class="quantity-input" value="1" min="1" />
+                <button class="btn-quantity" onclick="increaseQuantity(this)">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <div class="item-total">
+                <p class="total-price">$18.99</p>
+              </div>
+              <button class="btn-remove" onclick="removeItem(this)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+
+          <div id="empty-cart-message" class="empty-cart" style="display: none">
+            <i class="fas fa-shopping-cart"></i>
+            <p>Your cart is empty</p>
+            <a href="./frontend/index.html" class="btn-continue-shopping"
+              >Continue Shopping</a
+            >
+          </div>
+        </div>
+
+        <!-- Order Summary Section -->
+        <div class="order-summary">
+          <h2>Order Summary</h2>
+
+          <div class="summary-details">
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span id="subtotal">$31.98</span>
+            </div>
+            <div class="summary-row">
+              <span>Delivery Fee</span>
+              <span id="delivery-fee">$2.99</span>
+            </div>
+            <div class="summary-row">
+              <span>Tax (10%)</span>
+              <span id="tax">$3.50</span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span id="total-amount">$38.47</span>
+            </div>
+          </div>
+
+          <input
+            type="text"
+            id="promo-code"
+            class="promo-input"
+            placeholder="Enter promo code"
+          />
+          <button class="apply-promo" onclick="applyPromo()">
+            Apply Promo
+          </button>
+
+          <button class="checkout-btn" onclick="goToCheckout()">
+            Proceed to Checkout
+          </button>
+          <a href="/frontend/index.html" class="continue-shopping-link"
+            >Continue Shopping</a
+          >
+        </div>
+      </div>
     </main>
   </body>
 </html>

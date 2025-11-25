@@ -4,24 +4,108 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles/menu.css" />
+    <link rel="shortcut icon" href="../icon.png" type="image/x-icon" />
     <script defer src="./scripts/menu.js"></script>
     <title>Food Ordering | Menu Page</title>
   </head>
   <body>
-    <header class="header">
-      <h1>Ordering Food APP</h1>
-      <nav>
-        <a href="../home.html">home</a>
-        <a href="../login/login.html">login</a>
-        <a href="../register/register.html">register</a>
-        <a href="../checkout/checkout.html">checkout</a>
-        <a href="../cart/cart.html">cart</a>
-        <a href="../dashboard/menu.html">dashboard</a>
-      </nav>
+   <header class="header">
+        <div class="header-container">
+            <a href="/frontend/index.html" class="logo-section">
+                <img src="/frontend/icon.png" alt="FoodDash Logo" onerror="this.src='https://via.placeholder.com/50?text=FD'">
+                <h1>FoodDash</h1>
+            </a>
+            
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+                <i class="fas fa-bars" id="menuIcon"></i>
+            </button>
+
+            <nav class="nav-menu" id="navMenu">
+                <a data-path="home" href="/frontend/index.html">home</a>
+                <a data-path="login" href="../login/login.html">login</a>
+                <a data-path="register" href="../register/register.html">register</a>
+                <a data-path="menu" href="../menu/menu.html" class="active">menu</a>
+                <a data-path="cart" href="../cart/cart.html">cart</a>
+                <a data-path="orders" href="../orders/orders.html">my orders</a>
+                <a data-path="dashboard" href="../dashboard/menu.html">dashboard</a>
+                <button class="logout-button" onclick="handleLogout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </nav>
+        </div>
     </header>
-    <main>
-      <h1>Menu Page</h1>
-      <h1>Welcome to Our Food Ordering Service</h1>
+    <main class="main-content">
+      <div class="container">
+        <!-- Search and Filter Section -->
+        <div class="search-section">
+          <h1 class="page-title">Choose Pizza</h1>
+          <div class="search-filter-wrapper">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search for dishes..."
+                onkeyup="filterMenu()"
+              />
+            </div>
+            <div class="filter-buttons">
+              <button class="filter-btn active" onclick="filterCategory('all')">
+                All
+              </button>
+              <button class="filter-btn" onclick="filterCategory('ramen')">
+                Ramen
+              </button>
+              <button class="filter-btn" onclick="filterCategory('dumplings')">
+                Dumplings
+              </button>
+              <button class="filter-btn" onclick="filterCategory('soup')">
+                Soup
+              </button>
+              <button class="filter-btn" onclick="filterCategory('roll')">
+                Roll
+              </button>
+            </div>
+          </div>
+          <div class="results-info">
+            <span id="resultsCount">8 Pizza Result</span>
+          </div>
+        </div>
+
+        <!-- Menu Grid -->
+        <div class="menu-grid" id="menuGrid">
+          <!-- Menu items will be dynamically inserted here -->
+        </div>
+      </div>
     </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header">
+        <h2>Your Cart</h2>
+        <button class="close-cart" onclick="toggleCart()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <div class="empty-cart">
+          <i class="fas fa-shopping-basket"></i>
+          <p>Your cart is empty</p>
+        </div>
+      </div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>Total:</span>
+          <span class="total-price" id="totalPrice">$0.00</span>
+        </div>
+        <button class="checkout-btn" onclick="checkout()">
+          <i class="fas fa-credit-card"></i>
+          Proceed to Checkout
+        </button>
+      </div>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
   </body>
 </html>

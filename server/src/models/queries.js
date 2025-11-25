@@ -1,105 +1,87 @@
-// import {
-//   getAllOrders,
-//   updateOrderStatus,
-// } from "../controllers/admin.controller";
-
-// const userModel = {
-//   id: 1,
-//   email: "",
-//   password: "",
-//   full_name: "",
-//   role: "customer",
-//   phone: "",
-//   cart: [],
-//   orders: [],
-//   created_at: "",
-//   updated_at: "",
-// };
-// const menuModel = {
-//   id: 1,
-//   name: "",
-//   description: "",
-//   price: 0.0,
-//   image: "",
-//   category: "",
-// };
-
-// const cartModel = {
-//   id: 1,
-//   user_id: 1,
-//   items: [
-//     {
-//       menu_item_id: 1,
-//       quantity: 2,
-//       price: 0.0,
-//     },
-//   ],
-//   total_amount: 0.0,
-// };
-
-// const orderModel = {
-//   id: 1,
-//   user_id: 1,
-//   items: [
-//     {
-//       menu_item_id: 1,
-//       quantity: 2,
-//       price: 0.0,
-//     },
-//   ],
-//   order_date: "",
-//   total_amount: 0.0,
-// };
-// const itemsModel = {
-//   id: 1,
-//   order_id: 1,
-//   menu_item_id: 1,
-//   quantity: 2,
-//   price: 0.0,
-//   subtotal: 0.0,
-// };
-
-// table users
-// table menu_items
-// table orders
-// table order_items
-// table categories
-// table carts
-// table cart_items
-
+// sql.js
 const SQL = {
-  // auth Queries
-  loginUser: (email) => `SELECT * FROM users WHERE email ='${email}';`,
-  registerUser: (user) =>
-    `INSERT INTO users (email, password, full_name, role, phone) VALUES ('${user.email}', '${user.password}', '${user.full_name}', '${user.role}', '${user.phone}');`,
-  getUserById: (id) => `SELECT * FROM users WHERE id =${id};`,
+  getUserCart: () => `
+    SELECT c.cart_id, ci.cart_item_id, ci.quantity, ci.notes, m.*
+    FROM carts c
+    LEFT JOIN cart_items ci ON c.cart_id = ci.cart_id
+    LEFT JOIN menu m ON ci.item_id = m.item_id
+    WHERE c.user_id = ?;
+  `,
 
-  // Cart Queries
-  getUserCart: (userId) => `SELECT * FROM carts WHERE user_id =${userId};`,
-  addItemsToCart: (cartId, item) =>
-    `INSERT INTO cart_items (cart_id, menu_item_id, quantity, price) VALUES (${cartId}, ${item.menu_item_id}, ${item.quantity}, ${item.price});`,
-  removeMenuItemsFromCart: (cartId) =>
-    `DELETE FROM cart_items WHERE cart_id = ${cartId};`,
-  updateCartItemQuantity: (cartId, menuItemId, quantity) =>
-    `UPDATE cart_items SET quantity = ${quantity} WHERE cart_id = ${cartId} AND menu_item_id = ${menuItemId};`,
-  clearCart: (cartId) => `DELETE FROM cart_items WHERE cart_id = ${cartId};`,
+  addItemToCart: () => `
+    INSERT INTO cart_items (cart_id, item_id, quantity, notes)
+    VALUES (?, ?, ?, ?)
+    ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity);
+  `,
 
+  removeItemFromCart: () => `
+    DELETE FROM cart_items WHERE cart_id = ? AND item_id = ?;
+  `,
 
-  // Menu Queries
-  getMenuItems: () => `SELECT * FROM menu_items;`,
-  createNewMenuItem: (item) =>
-    `INSERT INTO menu_items (name, description, price, image, category) VALUES ('${item.name}', '${item.description}', ${item.price}, '${item.image}', '${item.category}');`,
-  updateMenuItem: (itemId, item) =>
-    `UPDATE menu_items SET name='${item.name}', description='${item.description}', price=${item.price}, image='${item.image}', category='${item.category}' WHERE id=${itemId};`,
-  deleteMenuItem: (itemId) => `DELETE FROM menu_items WHERE id = ${itemId};`,
+  clearCart: () => `
+    DELETE FROM cart_items WHERE cart_id = ?;
+  `,
 
-  // Order Queries
-  getAllOrders: () => `SELECT * FROM orders;`,
-  getAllUserOrders: (userId) => `SELECT * FROM orders WHERE user_id =${userId};`,
-  createNewOrder: (order) =>
-    `INSERT INTO orders (user_id, total_amount, order_date) VALUES (${order.user_id}, ${order.total_amount}, '${order.order_date}');`,
-  updateOrderStatus: (orderId, status) =>
-    `UPDATE orders SET status = '${status}' WHERE id = ${orderId};`,
+  updateItemCartQuantity: () => `
+    UPDATE cart_items SET quantity = ? WHERE cart_id = ? AND item_id = ?;
+  `,
+
+  createOrder: () => `
+    INSERT INTO orders (user_id, total_amount, payment_method, payment_status, order_status)
+    VALUES (?, ?, ?, 'pending', 'pending');
+  `,
+
+  addOrderItem: () => `
+    INSERT INTO order_items (order_id, item_id, name_at_purchase, price_at_purchase, quantity, notes)
+    VALUES (?, ?, ?, ?, ?, ?);
+  `,
+
+  clearUserCart: () => `
+    DELETE FROM cart_items WHERE cart_id = ?;
+  `,
+
+  updateOrderStatus: () => `
+    UPDATE orders SET order_status = ? WHERE order_id = ?;
+  `,
+
+  isUserExist: () => `
+    SELECT * FROM users WHERE email = ? LIMIT 1;
+  `,
+
+  registerNewUser: () => `
+    INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?);
+  `,
+
+  getUserOrders: () => `
+    SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC;
+  `,
+
+  getAllOrders: () => `
+    SELECT * FROM orders ORDER BY created_at DESC;
+  `,
+
+  isMenuItemExists: () => `
+  SELECT * FROM menu WHERE item_id= ? ORDER BY created_at DESC;`,
+  addNewMenuItem: () => `
+    INSERT INTO menu (name, description, image_url, price)
+    VALUES (?, ?, ?, ?);
+  `,
+
+  updateMenuItemById: () => `
+    UPDATE menu SET name=?, description=?, image_url=?, price=?, is_available=?
+    WHERE item_id = ?;
+  `,
+
+  deleteMenuItem: () => `
+    DELETE FROM menu WHERE item_id = ?;
+  `,
+
+  getAllMenuItems: () => `
+    SELECT * FROM menu ORDER BY created_at DESC;
+  `,
+
+  getCurrentUser: () => `
+    SELECT user_id, name, email, phone, role, is_active FROM users WHERE user_id = ?;
+  `,
 };
-
 export default SQL;

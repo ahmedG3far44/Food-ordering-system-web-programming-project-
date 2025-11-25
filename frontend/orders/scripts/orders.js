@@ -1,8 +1,7 @@
-const navElements = document.querySelectorAll("nav a");
-const currentUser = JSON.parse(localStorage.getItem("user")) || null;
-const isLogged = localStorage.getItem("isLogged") === "true";
 
-const logoutBtn = document.querySelector(".logout-button");
+const navElements = document.querySelectorAll("nav a");
+const isLogged = localStorage.getItem("isLogged") === "true";
+const currentUser = JSON.parse(localStorage.getItem("user")) || null;
 
 if (!currentUser) {
   window.location.href = `/frontend/login/login.html`;
@@ -58,14 +57,7 @@ navElements.forEach((navEl) => {
   }
 });
 
-function handleLogout() {
-  localStorage.removeItem("user");
-  localStorage.setItem("isLogged", "false");
-  window.location.href = `/frontend/login/login.html`;
-  logoutBtn.style.display = "none";
-}
-
-logoutBtn.addEventListener("click", handleLogout);
+const logoutBtn = document.querySelector(".logout-button");
 
 function handleLogout() {
   localStorage.removeItem("user");
@@ -75,20 +67,3 @@ function handleLogout() {
 }
 
 logoutBtn.addEventListener("click", handleLogout);
-
-function handlePayment() {
-  const payBtn = document.getElementById("pay-btn");
-  payBtn.innerText = "Processing...";
-  payBtn.style.opacity = "0.7";
-
-  setTimeout(() => {
-    document.getElementById("payment-form-container").style.display = "none";
-    const now = new Date();
-    now.setMinutes(now.getMinutes() + 45);
-    document.getElementById("delivery-time").innerText = now.toLocaleTimeString(
-      [],
-      { hour: "2-digit", minute: "2-digit" }
-    );
-    document.getElementById("success-message").style.display = "block";
-  }, 2000);
-}
